@@ -15,5 +15,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8080
 
 # Comando para ejecutar el servidor con Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "ecommerce.wsgi"]
-
+CMD ["gunicorn", "--bind=0.0.0.0:8080", "ecommerce.wsgi:application"]
