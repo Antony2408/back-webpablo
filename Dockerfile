@@ -11,6 +11,10 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Ejecuta migraciones y collectstatic
+RUN python manage.py migrate --noinput
+RUN python manage.py collectstatic --noinput
+
 # Expone el puerto que usará Cloud Run
 EXPOSE 8080
 
