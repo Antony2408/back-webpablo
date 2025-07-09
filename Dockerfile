@@ -1,5 +1,5 @@
 # Usa una imagen base de Python
-FROM python:3.12-slim
+FROM python:3.10-slim
 
 # Establece el directorio de trabajo
 WORKDIR /app
@@ -15,5 +15,5 @@ RUN pip install -r requirements.txt
 EXPOSE 8080
 
 # Comando para ejecutar el servidor con Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "back_webpablo.wsgi"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "ecommerce.wsgi"]
 
