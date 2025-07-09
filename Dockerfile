@@ -1,19 +1,19 @@
-# Usa una imagen oficial de Python
+# Usa una imagen base de Python
 FROM python:3.10-slim
 
-# Establece el directorio de trabajo en el contenedor
+# Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia los archivos del proyecto al contenedor
+# Copia todo el proyecto
 COPY . .
 
-# Instala las dependencias
+# Instala dependencias
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Expone el puerto 8080 (Cloud Run escucha en este puerto)
+# Expone el puerto que usará Cloud Run
 EXPOSE 8080
 
-# Comando para correr el servidor
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
+# Comando para ejecutar el servidor con Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "back_webpablo.wsgi"]
 
