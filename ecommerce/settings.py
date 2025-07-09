@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -77,10 +78,8 @@ MIDDLEWARE = [
 ]
 
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", # Ajusta esto si tu frontend está en otro puerto
+CORS_ALLOW_ALL_ORIGINS = True
 
-]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -112,12 +111,12 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_db',
-        'USER': 'postgres',  # Usuario configurado
-        'PASSWORD': '12345678',  # Contraseña configurada al instalar PostgreSQL
-        'HOST': '34.63.81.68',  # IP pública del servidor de Cloud SQL
-        'PORT': '5432',       # Puerto predeterminado
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'ecommerce_db'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '12345678'),
+        'HOST': os.environ.get('DB_HOST', '34.63.81.68'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -163,6 +162,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
