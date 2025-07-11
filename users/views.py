@@ -42,7 +42,12 @@ class RegisterView(APIView):
             return Response({"message": "Usuario creado exitosamente", "user": serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Vista para listar usuarios (Solo accesible con autenticación)
+# Vista para listar usuarios (Acceso público, ya no se requiere autenticación)
+class UserListView(ListAPIView):
+    permission_classes = [AllowAny]  # 🔓 Permitir acceso sin autenticación
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
 class UserListView(ListAPIView):
     permission_classes = [IsAuthenticated]  # 🔒 Protegemos con JWT
     queryset = CustomUser.objects.all()
