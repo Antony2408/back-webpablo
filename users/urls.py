@@ -1,11 +1,11 @@
-# views.py
+# urls.py
+from django.urls import path
+from .views import CustomTokenObtainPairView, RegisterView, UserListView  
+from rest_framework_simplejwt.views import TokenRefreshView
 
-from rest_framework import generics
-from .models import CustomUser
-from .serializers import CustomUserSerializer
-from rest_framework.permissions import AllowAny  # Permitir acceso a todos los usuarios
-
-class UserListView(generics.ListAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
-    permission_classes = [AllowAny]  # Permitir acceso sin token, sin autenticación
+urlpatterns = [
+    path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('users/', UserListView.as_view(), name='user_list'),  # Acceso público a usuarios
+]
